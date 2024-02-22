@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caldeira Hiper Realista em Canvas</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #e0e0e0;
+        }
+        canvas {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="caldeiraCanvas" width="400" height="500"></canvas>
+
+<script>
+    const canvas = document.getElementById('caldeiraCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Funções auxiliares para desenhar elementos específicos
+    function desenharParafuso(x, y) {
+        ctx.beginPath();
+        ctx.arc(x, y, 4, 0, 2 * Math.PI);
+        ctx.fillStyle = 'silver';
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(x - 2, y);
+        ctx.lineTo(x + 2, y);
+        ctx.moveTo(x, y - 2);
+        ctx.lineTo(x, y + 2);
+        ctx.strokeStyle = 'grey';
+        ctx.stroke();
+    }
+
+    function desenharReflexo() {
+        ctx.beginPath();
+        ctx.ellipse(180, 250, 60, 120, Math.PI / 5, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.fill();
+    }
+
+    // Desenho do corpo da caldeira com gradientes complexos para simular metal
+    let grdCorpo = ctx.createRadialGradient(200, 250, 50, 200, 250, 150);
+    grdCorpo.addColorStop(0, '#f0f0f0');
+    grdCorpo.addColorStop(1, '#a0a0a0');
+
+    ctx.fillStyle = grdCorpo;
+    ctx.beginPath();
+    ctx.ellipse(200, 250, 120, 180, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    desenharReflexo();
+
+    // Manômetro mais detalhado
+    ctx.beginPath();
+    ctx.arc(200, 120, 30, 0, Math.PI * 2);
+    ctx.fillStyle = '#e0e0e0';
+    ctx.fill();
+    ctx.strokeStyle = '#606060';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Agulha do manômetro
+    ctx.beginPath();
+    ctx.moveTo(200, 120);
+    ctx.lineTo(220, 130);
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Válvula e tubulação com efeitos de sombra para profundidade
+    ctx.fillStyle = '#505050';
+    ctx.beginPath();
+    ctx.arc(200, 380, 20, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.strokeStyle = '#404040';
+    ctx.lineWidth = 12;
+    ctx.beginPath();
+    ctx.moveTo(200, 380);
+    ctx.lineTo(200, 440);
+    ctx.stroke();
+
+    // Adicionando detalhes como parafusos e sombras para realismo
+    desenharParafuso(80, 220);
+    desenharParafuso(320, 220);
+    desenharParafuso(80, 280);
+    desenharParafuso(320, 280);
+
+    // Sombra projetada para dar a impressão de que a caldeira está suspensa
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+    ctx.beginPath();
+    ctx.ellipse(200, 450, 140, 20, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+</script>
+
+</body>
+</html>
